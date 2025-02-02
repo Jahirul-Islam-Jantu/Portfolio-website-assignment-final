@@ -1,12 +1,13 @@
 import MasterLayOut from "../components/MasterLayOut.jsx";
 
-const Products = () => {
+const Services = () => {
     return (
         <MasterLayOut>
-            <h1>Products</h1>
+            <h1>Service</h1>
+
 
         </MasterLayOut>
     );
 };
 
-export default Products;
+export default Services;

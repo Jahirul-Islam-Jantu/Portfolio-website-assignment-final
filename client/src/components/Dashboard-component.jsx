@@ -67,9 +67,11 @@ const DashboardComponent = () => {
       </div>
         <div className="container mx-auto  border-gray-700 shadow-md">
             <Tabs>
-                <TabList className="text-gray-700 font-bold">
+                <TabList className="text-gray-700 font-bold flex items-center justify-between ">
                     <Tab>Add Products</Tab>
                     <Tab>All Product</Tab>
+                    <Tab>Add Team Members</Tab>
+                    <Tab>All Team Members</Tab>
                 </TabList>
 
                 <TabPanel className="mt-4">

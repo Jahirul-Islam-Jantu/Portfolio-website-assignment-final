@@ -1,13 +1,12 @@
 import MasterLayOut from "../components/MasterLayOut.jsx";
 
-const LogOut = () => {
+const Blogs = () => {
     return (
         <MasterLayOut>
-            <h1>LogOut</h1>
-
+            <h1>Blogs</h1>
 
         </MasterLayOut>
     );
 };
 
-export default LogOut;
+export default Blogs;

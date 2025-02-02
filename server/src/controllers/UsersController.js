@@ -12,7 +12,7 @@ export const userLogIn = async (req, res) => {
     return res.json(result);
 }
 
-// LogOut service
+// Services service
 export const userLogOut = async (req, res) => {
     let result = await UserLogOutService(req, res);
     return res.json(result);

@@ -34,10 +34,21 @@ const Layout = () => {
                         <div className="col-span-7   ">
                             <nav className="flex justify-center" >
                                 <ul className="flex  gap-[15px]">
-                                    <li> <NavLink className={({isActive})=> (isActive? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl") } to={"/"} >Home</NavLink></li>
-                                    <li> <NavLink className={({isActive})=> (isActive? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl") } to={"/aboutus"}>About Us</NavLink></li>
-                                    <li> <NavLink className={({isActive})=> (isActive? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl") } to={"/products"}>Products</NavLink></li>
-                                    <li> <NavLink className={({isActive})=> (isActive? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl") } to={"/contact"}>Contact</NavLink></li>
+                                    <li><NavLink
+                                        className={({isActive}) => (isActive ? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl")}
+                                        to={"/"}>Home</NavLink></li>
+                                    <li><NavLink
+                                        className={({isActive}) => (isActive ? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl")}
+                                        to={"/aboutus"}>About Us</NavLink></li>
+                                    <li><NavLink
+                                        className={({isActive}) => (isActive ? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl")}
+                                        to={"/blogs"}>All Blogs</NavLink></li>
+                                    <li><NavLink
+                                        className={({isActive}) => (isActive ? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl")}
+                                        to={"/services"}>Services</NavLink></li>
+                                    <li><NavLink
+                                        className={({isActive}) => (isActive ? "px-[1rem] py-[0.6rem] bg-gray-700  rounded-xl text-white hover:text-slate-500 hover:bg-gray-200" : "px-[1rem] py-[0.6rem] bg-gray-200  rounded-xl")}
+                                        to={"/contact"}>Contact</NavLink></li>
                                 </ul>
                             </nav>
                         </div>

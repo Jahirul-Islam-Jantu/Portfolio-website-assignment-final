@@ -7,5 +7,5 @@ const ProductSchema = mongoose.Schema({
     img:{type:String},
 }, {timestamps: true, versionKey: false})
 
-const ProductModel = mongoose.model("products", ProductSchema)
-export default ProductModel
+const BlogModel = mongoose.model("products", ProductSchema)
+export default BlogModel

@@ -54,7 +54,7 @@ export const UserLogInService= async (req, res) => {
 export const UserLogOutService= async (req, res) => {
     try{
         res.clearCookie("token");
-        return {status: "Success", message: "LogOut Successfully"};
+        return {status: "Success", message: "Services Successfully"};
 
     }catch(err){
         return {status: "Error", error: err};
