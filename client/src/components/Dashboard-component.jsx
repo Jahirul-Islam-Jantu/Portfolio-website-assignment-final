@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { ErrorMessage, IsEmpty, SuccessMessage } from "../helper/helper.js";
-import { createBlog, deleteBlog, getAllBlog, uploadFiles } from "../apiCalls/apiCalls.js";
+import {createBlog, deleteBlog, getAllBlog,  uploadFiles} from "../apiCalls/apiCalls.js";
 import { useNavigate } from "react-router-dom";
+import { updateBlog as updateBlogAPI } from "../apiCalls/apiCalls.js";
 
 const DashboardComponent = () => {
     let navigate = useNavigate();
@@ -18,6 +19,16 @@ const DashboardComponent = () => {
         blogContent: "",
         img: "",
     });
+    const [editingBlog, setEditingBlog] = useState(null);
+    const [editData, setEditData] = useState({
+        blogTitle: "",
+        blogDes: "",
+        blogContent: "",
+        img: "",
+    });
+    const [newImage, setNewImage] = useState(null);
+
+
 
     useEffect(() => {
         (async () => {
@@ -58,6 +69,54 @@ const DashboardComponent = () => {
             setBlogs(blogs.filter((blog) => blog._id !== id));
         }
     };
+
+    const handleEditImageUpload = async () => {
+        if (!newImage) {
+            ErrorMessage("Please select an image to upload");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", newImage);
+
+        const result = await uploadFiles(formData);
+
+        if (result?.data?.file?.[0]?.filename) {
+            setEditData({ ...editData, img: result.data.file[0].filename });
+            SuccessMessage("Image uploaded successfully!");
+        } else {
+            ErrorMessage("Image upload failed");
+        }
+    };
+     // ✅ Ensure this import is correct
+
+    const updateBlog = async (id, updatedData) => {
+        try {
+            let result = await updateBlogAPI(id, updatedData);
+
+            if (result) { // Check for true instead of accessing `result.data`
+                SuccessMessage("Blog updated successfully!");
+
+                // Update the blog list without reloading
+                setBlogs((prevBlogs) =>
+                    prevBlogs.map((blog) =>
+                        blog._id === id ? { ...blog, ...updatedData } : blog
+                    )
+                );
+
+                setEditingBlog(null); // Close modal
+            } else {
+                ErrorMessage("Failed to update blog.");
+            }
+        } catch (error) {
+            ErrorMessage("Something went wrong while updating the blog.");
+            console.error("Update Blog Error:", error);
+        }
+    };
+
+
+
+
 
     return (
         <div className="flex flex-col gap-10">
@@ -188,28 +247,120 @@ const DashboardComponent = () => {
                                             />
                                         </td>
 
-                                        {/* Delete Button */}
+                                        {/* Action Buttons (Edit + Delete) */}
                                         <td className="px-6 py-4 text-center">
-                                                <span
-                                                    onClick={() => deleteHandler(item?._id)}
-                                                    className="cursor-pointer text-red-600 hover:underline"
-                                                >
-                                                    Remove
-                                                </span>
+                                            <button
+                                                className="text-blue-600 hover:underline mr-4"
+                                                onClick={() => {
+                                                    setEditingBlog(item);
+                                                    setEditData({
+                                                        blogTitle: item.blogTitle,
+                                                        blogDes: item.blogDes,
+                                                        blogContent: item.blogContent,
+                                                        img: item.img,
+                                                    });
+                                                }}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="text-red-600 hover:underline"
+                                                onClick={() => deleteHandler(item?._id)}
+                                            >
+                                                Remove
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
                                 </tbody>
                             </table>
                         </div>
+
+                        {/* Add the Edit Modal Here */}
+                        {editingBlog && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                <div className="bg-white w-3/4 p-6 rounded-lg shadow-lg max-h-[80vh] overflow-y-auto">
+                                    <h2 className="text-2xl font-bold">Edit Blog</h2>
+
+                                    {/* Blog Title */}
+                                    <input
+                                        type="text"
+                                        value={editData.blogTitle}
+                                        onChange={(e) => setEditData({ ...editData, blogTitle: e.target.value })}
+                                        className="w-full rounded-lg p-2 border mt-2"
+                                        placeholder="Blog Title"
+                                    />
+
+                                    {/* Blog Description */}
+                                    <input
+                                        type="text"
+                                        value={editData.blogDes}
+                                        onChange={(e) => setEditData({ ...editData, blogDes: e.target.value })}
+                                        className="w-full rounded-lg p-2 border mt-2"
+                                        placeholder="Blog Description"
+                                    />
+
+                                    {/* Blog Content */}
+                                    <textarea
+                                        value={editData.blogContent}
+                                        onChange={(e) => setEditData({ ...editData, blogContent: e.target.value })}
+                                        className="w-full rounded-lg p-2 border mt-2"
+                                        placeholder="Blog Content"
+                                    ></textarea>
+
+                                    {/* Current Image Preview */}
+                                    <div className="mt-4">
+                                        <p className="text-gray-700">Current Image:</p>
+                                        <img
+                                            src={`${baseUrl}/${editData.img}`}
+                                            alt="Current Blog"
+                                            className="w-[120px] h-[120px] object-cover rounded-lg mt-2"
+                                        />
+                                    </div>
+
+                                    {/* Upload New Image */}
+                                    <div className="mt-4">
+                                        <label className="block text-gray-700">Upload New Image:</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            className="w-full rounded-lg p-2 border mt-2"
+                                            onChange={(e) => setNewImage(e.target.files[0])}
+                                        />
+                                        <button
+                                            onClick={handleEditImageUpload}
+                                            className="bg-purple-600 text-white px-4 py-2 rounded-lg mt-2"
+                                        >
+                                            Upload Image
+                                        </button>
+                                    </div>
+
+                                    {/* Buttons */}
+                                    <button
+                                        className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4"
+                                        onClick={() => updateBlog(editingBlog._id, editData)}
+                                    >
+                                        Update Blog
+                                    </button>
+                                    <button
+                                        className="bg-red-600 text-white px-4 py-2 rounded-lg mt-4 ml-2"
+                                        onClick={() => setEditingBlog(null)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                     </TabPanel>
+
                 </Tabs>
             </div>
 
             {/* Modal for Full Blog Content */}
             {selectedBlog && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white w-3/4 p-6 rounded-lg shadow-lg max-h-[80vh] overflow-y-auto">
+                <div className="bg-white w-3/4 p-6 rounded-lg shadow-lg max-h-[80vh] overflow-y-auto">
                         <h2 className="text-2xl font-bold">{selectedBlog.blogTitle}</h2>
                         <img className="w-full h-60 object-cover rounded-lg my-4" src={`${baseUrl}/${selectedBlog.img}`} alt={selectedBlog.blogTitle} />
                         <p className="text-gray-700">{selectedBlog.blogContent}</p>

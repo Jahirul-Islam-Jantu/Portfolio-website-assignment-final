@@ -12,6 +12,7 @@ export const CreateBlogService= async (req) => {
 }
 
 
+
 export const getBlogService= async (req) => {
     try{
         let result = await BlogModel.find();
@@ -19,6 +20,18 @@ export const getBlogService= async (req) => {
 
     }catch(err){
         return {status: "Error", error: err, message: "No Blogs"};
+    }
+}
+
+export const UpdateBlogService= async (req) => {
+    try{
+        let id = req.params.id;
+        let reqBody = req.body;
+        let result = await BlogModel.updateOne({_id:id},reqBody);
+        return {status: "Success", data: result , message: "Blog Updated Successfully"};
+
+    }catch(err){
+        return {status: "Error", error: err, message: "Blog Update failed"};
     }
 }
 

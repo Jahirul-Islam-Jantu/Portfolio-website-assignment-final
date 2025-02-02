@@ -16,6 +16,7 @@ router.get("/logout", UserController.userLogOut)
 // Blog Api
 router.post("/createBlog", BlogController.createBlog)
 router.get("/getBlogs", BlogController.getBlog)
+router.post("/updateBlogs/:id", BlogController.UpdateBlog)
 router.delete("/deleteBlog/:id", BlogController.deleteBlog)
 // file route
 router.post("/file-upload", upload.array("file", 20), FileUploads.fileUpload)

@@ -95,6 +95,26 @@ class ApiCalls {
             return false
         }
     }
+    async updateBlog(id, reqBody) {
+        try {
+            let result = await axios.post(`${baseURL}/updateBlogs/${id}`, reqBody);
+
+            if (result.data.status === "Success") {
+                SuccessMessage(result.data.message);
+                return result.data; // Return the response so the calling function can use it
+            } else {
+                ErrorMessage(result.data.message);
+                return false;
+            }
+        } catch (error) {
+            ErrorMessage("Something went wrong while updating the blog.");
+            console.error("Update Blog API Error:", error);
+            return false;
+        }
+    }
+
+
+
 
     async  deleteBlog (id) {
         let IsConfirm = await DeleteAlert()
@@ -119,4 +139,4 @@ class ApiCalls {
 
 }
 
-export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog , deleteBlog} = new ApiCalls( )
+export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog, updateBlog , deleteBlog} = new ApiCalls( )
