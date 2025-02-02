@@ -53,8 +53,8 @@ class ApiCalls {
         }
     }
 
-    async createProduct(reqBody) {
-        let result = await axios.post(`${baseURL}/createProduct`, reqBody)
+    async createBlog(reqBody) {
+        let result = await axios.post(`${baseURL}/createBlog`, reqBody)
 
         if (result.data.status === "Success"){
             SuccessMessage(result.data.message)
@@ -84,8 +84,8 @@ class ApiCalls {
         }
     }
 
-    async  getAllProduct() {
-        let result = await axios.get(`${baseURL}/getProducts`)
+    async  getAllBlog() {
+        let result = await axios.get(`${baseURL}/getBlogs`)
 
         if (result.data.status === "Success"){
             return result?.data?.data
@@ -96,10 +96,10 @@ class ApiCalls {
         }
     }
 
-    async  deleteProduct (id) {
+    async  deleteBlog (id) {
         let IsConfirm = await DeleteAlert()
         if (IsConfirm){
-        let result = await axios.delete(`${baseURL}/deleteProduct/`+ id)
+        let result = await axios.delete(`${baseURL}/deleteBlog/`+ id)
             console.log(result)
             if (result.data.status === "Success"){
                 return result
@@ -119,4 +119,4 @@ class ApiCalls {
 
 }
 
-export const {registerUser, universalApi, loginUser, logOutUser, createProduct, uploadFiles, getAllProduct , deleteProduct} = new ApiCalls( )
+export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog , deleteBlog} = new ApiCalls( )

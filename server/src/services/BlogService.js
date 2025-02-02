@@ -4,10 +4,10 @@ export const CreateBlogService= async (req) => {
     try{
         let reqBody = req.body;
         let result = await BlogModel.create(reqBody);
-        return {status: "Success", data: result , message: "Product Created Successfully"};
+        return {status: "Success", data: result , message: "Blog Created Successfully"};
 
     }catch(err){
-        return {status: "Error", error: err, message: "Product Creation failed"};
+        return {status: "Error", error: err, message: "Blog Creation failed"};
     }
 }
 
