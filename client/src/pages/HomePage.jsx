@@ -5,9 +5,8 @@ import GetAllBlogs from "../components/GetAllBlogs.jsx";
 const HomePage = () => {
     return (
         <MasterLayOut>
-            <Slider/>
-            <GetAllBlogs/>
-
+            <Slider />
+            <GetAllBlogs limit={6} />  {/* Show only 6 blogs */}
         </MasterLayOut>
     );
 };

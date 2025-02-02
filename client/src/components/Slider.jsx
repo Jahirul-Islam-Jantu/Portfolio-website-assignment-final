@@ -1,76 +1,102 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { getAllBlog } from "../apiCalls/apiCalls.js";
+import Loader from "./Loader.jsx";
+import Modal from "./Modal.jsx"; // Import the modal
 
 const Slider = () => {
+    const [blogs, setBlogs] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const totalSlides = 4; // Total number of slides
+    const [loading, setLoading] = useState(true);
+    const [selectedBlog, setSelectedBlog] = useState(null); // State to store the selected blog
 
-    // Function to move to the next slide
-    const nextSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
-    };
-
-    // Function to move to the previous slide
-    const prevSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
-    };
-
-    // Automatically change slides every 3 seconds
     useEffect(() => {
-        const interval = setInterval(() => {
-            nextSlide();
-        }, 3000); // Adjust the interval as needed (3000ms = 3 seconds)
-        return () => clearInterval(interval); // Cleanup interval on component unmount
+        const fetchBlogs = async () => {
+            setLoading(true);
+            const result = await getAllBlog();
+            if (result) {
+                setBlogs(result);
+            }
+            setLoading(false);
+        };
+        fetchBlogs();
     }, []);
 
-    return (
-        <div className="carousel w-full relative overflow-hidden ">
-            {/* Slide Container */}
-            <div
-                className="flex transition-transform duration-700"
-                style={{
-                    transform: `translateX(-${currentSlide * 100}%)`,
-                    width: `${totalSlides * 100}%`,
-                }}
-            >
-                {/* Slide 1 */}
-                <div className="carousel-item relative w-full flex-shrink-0">
-                    <img src="/img1.jpg" className="w-screen h-screen" alt="Slide 1" />
-                    <div className="absolute flex flex-col justify-center items-center w-full h-full bg-opacity-50 bg-gray-800 text-white">
-                        <h1 className="text-4xl font-bold">Hello!</h1>
-                        <p className="text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, qui.</p>
-                    </div>
-                </div>
-                {/* Slide 2 */}
-                <div className="carousel-item relative w-full flex-shrink-0">
-                    <img src="/img2.jpg" className="w-screen h-screen" alt="Slide 2" />
-                    <div className="absolute flex flex-col justify-center items-center w-full h-full bg-opacity-50 bg-gray-800 text-white">
-                        <h1 className="text-4xl font-bold">Hello! 2</h1>
-                        <p className="text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, qui.</p>
-                    </div>
-                </div>
-                {/* Slide 3 */}
-                <div className="carousel-item relative w-full flex-shrink-0">
-                    <img src="/img3.jpg" className="w-screen h-screen" alt="Slide 3" />
-                    <div className="absolute flex flex-col justify-center items-center w-full h-full bg-opacity-50 bg-gray-800 text-white">
-                        <h1 className="text-4xl font-bold">Hello! 3</h1>
-                        <p className="text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, qui.</p>
-                    </div>
-                </div>
-                {/* Slide 4 */}
-                <div className="carousel-item relative w-full flex-shrink-0">
-                    <img src="/img4.jpg" className="w-screen h-screen" alt="Slide 4" />
-                    <div className="absolute flex flex-col justify-center items-center w-full h-full bg-opacity-50 bg-gray-800 text-white">
-                        <h1 className="text-4xl font-bold">Hello! 4</h1>
-                        <p className="text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim, qui.</p>
-                    </div>
-                </div>
-            </div>
+    // Move to the next slide
+    const nextSlide = () => {
+        setCurrentSlide((prev) => (prev + 1) % blogs.length);
+    };
 
-            {/* Navigation Buttons */}
-            <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                <button onClick={prevSlide} className="btn btn-circle">❮</button>
-                <button onClick={nextSlide} className="btn btn-circle">❯</button>
-            </div>
+    // Move to the previous slide
+    const prevSlide = () => {
+        setCurrentSlide((prev) => (prev - 1 + blogs.length) % blogs.length);
+    };
+
+    // Auto-slide every 3 seconds
+    useEffect(() => {
+        const interval = setInterval(nextSlide, 3000);
+        return () => clearInterval(interval);
+    }, [blogs]);
+
+    // Open the modal with the selected blog
+    const openModal = (blog) => {
+        setSelectedBlog(blog);
+    };
+
+    // Close the modal
+    const closeModal = () => {
+        setSelectedBlog(null);
+    };
+
+    return (
+        <div className="relative w-full overflow-hidden">
+            {/* Loading or No Blogs */}
+            {loading ? (
+                <Loader />
+            ) : blogs.length === 0 ? (
+                <p className="text-center">No blogs available</p>
+            ) : (
+                <div className="carousel w-full relative overflow-hidden">
+                    {/* Slide Container */}
+                    <div
+                        className="flex transition-transform duration-700"
+                        style={{
+                            transform: `translateX(-${currentSlide * 100}%)`,
+                            width: `${blogs.length * 100}%`,
+                        }}
+                    >
+                        {blogs.map((blog, index) => (
+                            <div
+                                key={index}
+                                className="carousel-item relative w-full h-[80vh] flex-shrink-0 cursor-pointer"
+                                onClick={() => openModal(blog)} // Open modal on click
+                            >
+                                <img
+                                    src={`http://localhost:3000/file-upload/${blog.img}`}
+                                    alt={blog.blogTitle}
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute flex gap-4 flex-col justify-center items-center w-full h-full bg-opacity-50 bg-gray-800 text-white">
+                                    <h1 className="text-4xl font-bold">{blog.blogTitle}</h1>
+                                    <p className="text-lg">{blog.blogContent.slice(0, 100)}...</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Navigation Buttons */}
+                    <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                        <button onClick={prevSlide} className="btn btn-circle">
+                            ❮
+                        </button>
+                        <button onClick={nextSlide} className="btn btn-circle">
+                            ❯
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal */}
+            {selectedBlog && <Modal blog={selectedBlog} onClose={closeModal} />}
         </div>
     );
 };
