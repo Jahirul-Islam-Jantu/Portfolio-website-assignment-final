@@ -48,14 +48,7 @@ const Layout = () => {
                                           className="bg-red-700 text-white rounded-xl px-[1rem] py-[0.5rem]">LogOut </Link>
                                     <Link to="/dashboard"
                                           className="bg-purple-700 text-white rounded-xl px-[1rem] py-[0.5rem]">Go Dashboard </Link>
-                                </div>) : (<div className=" flex  gap-[30px]">
-                                    <Link to="/login"
-                                          className="bg-purple-700 text-white rounded-xl px-[1rem] py-[0.5rem]"> Log
-                                        In </Link>
-                                    <Link to="/signUp"
-                                          className="bg-red-700 text-white rounded-xl px-[1rem] py-[0.5rem]">Sign
-                                        Up </Link>
-                                </div>)
+                                </div>) : (<div></div>)
                             }
 
                         </div>

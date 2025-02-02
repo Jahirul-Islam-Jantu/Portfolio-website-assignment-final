@@ -32,6 +32,7 @@ class ApiCalls {
 
     async loginUser(reqBody) {
         let result = await axios.post(`${baseURL}/login`, reqBody, {withCredentials: true })
+
         if (result.data.status === "Success"){
             SuccessMessage(result.data.message)
             return true

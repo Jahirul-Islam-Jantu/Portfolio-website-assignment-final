@@ -1,4 +1,4 @@
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import LogIn from "./pages/LogIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
@@ -12,19 +12,19 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 
 const App = () => {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <Toaster position="top-center" reverseOrder={false}/>
             <Routes>
                 <Route path="/" element={<HomePage /> } />
-                <Route path="/login" element={<LogIn/>} />
-                <Route path="/signUp" element={<SignUp/>} />
+                <Route path="/login" element={ <LogIn/> } />
+                <Route path="/signUp" element={ <SignUp/> } />
                 <Route path="/products" element={<Products/>} />
                 <Route path="/aboutus" element={<AboutUs/>} />
                 <Route path="/contact" element={<ContactPage/>} />
                 <Route path="/dashboard" element={ <PrivateRoute> <DashBoard/> </PrivateRoute> } />
 
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
     );
 };
 

@@ -10,7 +10,8 @@ const LogInInput = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const submitHandler = async () => {
+    const submitHandler = async (e) => {
+        e.preventDefault();
         if (IsEmpty(state.email)) {
             ErrorMessage("Email field is empty");
         } else if (IsEmpty(state.password)) {
@@ -21,7 +22,7 @@ const LogInInput = () => {
                 let result = await loginUser(state);
                 if (result === true) {
                     // window.location.href = "/"
-                    navigate("/");
+                    navigate("/dashboard");
 
                     setLoading(false);
                     return {status: "Success", msg: "Login Successful"};
