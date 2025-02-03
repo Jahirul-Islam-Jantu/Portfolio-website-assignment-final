@@ -3,7 +3,9 @@ import * as UserController from "../src/controllers/UsersController.js";
 import * as BlogController from "../src/controllers/BlogController.js"
 import * as FileUploads from "../src/controllers/FileUploadController.js"
 import * as ServicesController from "../src/controllers/ServicesController.js"
+import * as TeamController from "../src/controllers/TeamController.js"
 import upload from "../src/middleware/FileUploads.js";
+import AuthMiddleware from "../src/middleware/AuthMiddleware.js";
 const router = express.Router()
 
 
@@ -26,7 +28,14 @@ router.post("/file-upload", upload.array("file", 20), FileUploads.fileUpload)
 // Service Routes
 router.post("/createService", ServicesController.createServiceController )
 router.get("/showServices", ServicesController.getServiceController )
-router.post("/updateServices", ServicesController.UpdateServiceController)
-router.delete("/deleteService", ServicesController.deleteServiceController)
+router.post("/updateServices/:id", ServicesController.UpdateServiceController)
+router.delete("/deleteService/:id", ServicesController.deleteServiceController)
+
+// Team Routes
+
+router.post("/createTeam", TeamController.createTeamController )
+router.get("/showTeam", TeamController.getTeamController )
+router.post("/updateTeam/:id", TeamController.UpdateTeamController)
+router.delete("/deleteTeam/:id", TeamController.deleteTeamController)
 
 export default router
