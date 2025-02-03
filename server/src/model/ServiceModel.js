@@ -7,5 +7,5 @@ const TeamMemberSchema = mongoose.Schema({
     img:{type:String},
 }, {timestamps: true, versionKey: false})
 
-const BlogModel = mongoose.model("Service", TeamMemberSchema)
-export default BlogModel
+const ServiceModel = mongoose.model("Service", TeamMemberSchema)
+export default ServiceModel

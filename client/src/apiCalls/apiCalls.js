@@ -4,6 +4,8 @@ import {DeleteAlert, ErrorMessage, SuccessMessage} from "../helper/helper.js";
 const baseURL = "http://localhost:3000/api"
 
 class ApiCalls {
+
+    // User API Calls
     async registerUser(reqBody) {
         let result = await axios.post(`${baseURL}/registerUser`, reqBody, { withCredentials: true })
 
@@ -53,6 +55,8 @@ class ApiCalls {
         }
     }
 
+
+    // Blog API Calls
     async createBlog(reqBody) {
         let result = await axios.post(`${baseURL}/createBlog`, reqBody)
 
@@ -134,9 +138,139 @@ class ApiCalls {
 
     }
 
+    // Service Api Calls
+
+    async  createService (reqBody) {
+        let result = await axios.post(`${baseURL}/createService`, reqBody)
+
+        if (result.data.status === "Success"){
+            SuccessMessage(result.data.message)
+            return true
+        }
+        else{
+            ErrorMessage(result.data.message)
+            return false
+        }
+
+
+    }
+
+    async  getAllServices() {
+        let result = await axios.get(`${baseURL}/showServices`)
+
+        if (result.data.status === "Success"){
+            return result?.data?.data
+        }
+        else{
+            ErrorMessage(result.data.message)
+            return false
+        }
+    }
+
+    async updateService(id, reqBody) {
+        try {
+            let result = await axios.post(`${baseURL}/updateServices/${id}`, reqBody);
+
+            if (result.data.status === "Success") {
+                SuccessMessage(result.data.message);
+                return result.data; // Return the response so the calling function can use it
+            } else {
+                ErrorMessage(result.data.message);
+                return false;
+            }
+        } catch (error) {
+            ErrorMessage("Something went wrong while updating the blog.");
+            console.error("Update Blog API Error:", error);
+            return false;
+        }
+    }
+
+    async  deleteService (id) {
+        let IsConfirm = await DeleteAlert()
+        if (IsConfirm){
+            let result = await axios.delete(`${baseURL}/deleteService/`+ id)
+            console.log(result)
+            if (result.data.status === "Success"){
+                return result
+            }
+            else{
+                ErrorMessage(result.data.message)
+                return false
+            }
+
+        }
+
+
+    }
+
+    // Team API calls
+
+    async  createTeam (reqBody) {
+        let result = await axios.post(`${baseURL}/createTeam`, reqBody)
+
+        if (result.data.status === "Success"){
+            SuccessMessage(result.data.message)
+            return true
+        }
+        else{
+            ErrorMessage(result.data.message)
+            return false
+        }
+
+
+    }
+
+    async  getAllMembers() {
+        let result = await axios.get(`${baseURL}/showTeam`)
+
+        if (result.data.status === "Success"){
+            return result?.data?.data
+        }
+        else{
+            ErrorMessage(result.data.message)
+            return false
+        }
+    }
+
+    async updateMember(id, reqBody) {
+        try {
+            let result = await axios.post(`${baseURL}/updateTeam/${id}`, reqBody);
+
+            if (result.data.status === "Success") {
+                SuccessMessage(result.data.message);
+                return result.data; // Return the response so the calling function can use it
+            } else {
+                ErrorMessage(result.data.message);
+                return false;
+            }
+        } catch (error) {
+            ErrorMessage("Something went wrong while updating the blog.");
+            console.error("Update Blog API Error:", error);
+            return false;
+        }
+    }
+
+    async  deleteMember (id) {
+        let IsConfirm = await DeleteAlert()
+        if (IsConfirm){
+            let result = await axios.delete(`${baseURL}/deleteTeam/`+ id)
+            console.log(result)
+            if (result.data.status === "Success"){
+                return result
+            }
+            else{
+                ErrorMessage(result.data.message)
+                return false
+            }
+
+        }
+
+
+    }
+
 
 
 
 }
 
-export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog, updateBlog , deleteBlog} = new ApiCalls( )
+export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog, updateBlog , deleteBlog, createService, getAllServices, updateService, deleteService, createTeam, getAllMembers, updateMember, deleteMember} = new ApiCalls( )

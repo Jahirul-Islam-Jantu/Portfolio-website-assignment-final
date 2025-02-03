@@ -5,11 +5,16 @@ import { ErrorMessage, IsEmpty, SuccessMessage } from "../helper/helper.js";
 import {createBlog, deleteBlog, getAllBlog,  uploadFiles} from "../apiCalls/apiCalls.js";
 import { useNavigate } from "react-router-dom";
 import { updateBlog as updateBlogAPI } from "../apiCalls/apiCalls.js";
+import TeamComponent from "./TeamComponent.jsx";
+import ServiceComponent from "./ServiceComponent.jsx";
 
 const DashboardComponent = () => {
+
+
     let navigate = useNavigate();
     let baseUrl = "http://localhost:3000/file-upload";
 
+    // blog related functions
     const [blogs, setBlogs] = useState([]);
     const [selectedBlog, setSelectedBlog] = useState(null); // For "Read More" modal
     const [file, setFile] = useState(null);
@@ -113,6 +118,7 @@ const DashboardComponent = () => {
         }
     };
 
+// blog related function finish
 
 
 
@@ -129,8 +135,8 @@ const DashboardComponent = () => {
                     <TabList className="text-gray-700 font-bold flex items-center justify-center ">
                         <Tab>Add Blog</Tab>
                         <Tab>All Blogs</Tab>
-                        <Tab>Add Team Member</Tab>
-                        <Tab>All Team Members</Tab>
+                        <Tab>Manage Team Member</Tab>
+                        <Tab>Manage Service Item</Tab>
                     </TabList>
 
                     {/* Add Blog Form */}
@@ -351,6 +357,16 @@ const DashboardComponent = () => {
                             </div>
                         )}
 
+                    </TabPanel>
+
+
+
+                    <TabPanel>
+                        <TeamComponent />
+                    </TabPanel>
+
+                    <TabPanel>
+                        <ServiceComponent />
                     </TabPanel>
 
                 </Tabs>
