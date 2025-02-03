@@ -1,9 +1,10 @@
 import MasterLayOut from "../components/MasterLayOut.jsx";
+import GetAllService from "../components/GetAllService.jsx";
 
 const Services = () => {
     return (
         <MasterLayOut>
-            <h1>Service</h1>
+            <GetAllService limit={100}/>
 
 
         </MasterLayOut>
