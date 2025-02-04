@@ -1,10 +1,11 @@
 
 import MasterLayOut from "../components/MasterLayOut.jsx";
+import ContactComponent from "../components/ContactComponent.jsx";
 
 const ContactPage = () => {
     return (
         <MasterLayOut>
-            <h1>Contact Page</h1>
+            <ContactComponent/>
 
         </MasterLayOut>
     );

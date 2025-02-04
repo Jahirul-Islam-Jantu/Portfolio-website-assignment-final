@@ -1,10 +1,11 @@
 
 import MasterLayOut from "../components/MasterLayOut.jsx";
+import GetAllTeamMembers from "../components/GetAllTeamMembers.jsx";
 
 const AboutUs = () => {
     return (
         <MasterLayOut>
-            <h2>About Us</h2>
+            <GetAllTeamMembers/>
 
         </MasterLayOut>
     );
