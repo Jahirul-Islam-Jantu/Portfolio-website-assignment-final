@@ -28,7 +28,8 @@ export const showFeedbackService =async (req) => {
 export const deleteFeedbackService =async (req) => {
     try{
         let id = req.params.id;
-        let result =await FeedBackModel.deleteOne(id)
+        let result = await FeedBackModel.deleteOne({ _id: id });
+
         return {status: "Success", message: result};
     }catch(err){
         return {status: "Failed", message: err.message};

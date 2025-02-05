@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllFeedbacks } from "../apiCalls/apiCalls.js";
+import { deleteFeedback, getAllFeedbacks } from "../apiCalls/apiCalls.js";
 import { ErrorMessage, SuccessMessage } from "../helper/helper.js";
 
 const ShowAllFeedbacks = () => {
     const [showAllFeedbacks, setShowAllFeedbacks] = useState([]);
+    const [expandedMessages, setExpandedMessages] = useState({}); // Track expanded messages
 
     useEffect(() => {
         (async () => {
@@ -17,6 +18,19 @@ const ShowAllFeedbacks = () => {
         })();
     }, []);
 
+    const handleDelete = async (id) => {
+        let result = await deleteFeedback(id);
+        if (result && result.data.status === "Success") {
+            setShowAllFeedbacks(prevFeedbacks => prevFeedbacks.filter(f => f._id !== id));
+        }
+    };
+
+    const toggleReadMore = (id) => {
+        setExpandedMessages((prev) => ({
+            ...prev,
+            [id]: !prev[id], // Toggle the state for the specific message
+        }));
+    };
 
     return (
         <div>
@@ -31,34 +45,28 @@ const ShowAllFeedbacks = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {showAllFeedbacks !== null &&  showAllFeedbacks.map((item, index) => (
+                    {showAllFeedbacks.map((item, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-50">
                             <td className="px-6 py-4 text-center">{item?.name}</td>
                             <td className="px-6 py-4 text-center">{item?.email}</td>
 
                             {/* Truncated Content */}
                             <td className="px-6 py-4 text-center">
-                                {item?.message.length > 50
-                                    ? item?.message.slice(0, 50) + "..."
-                                    : item?.message}
+                                {expandedMessages[item._id] ? item?.message : item?.message.slice(0, 50) + "..."}
                                 {item?.message.length > 50 && (
                                     <button
                                         className="text-blue-600 hover:underline ml-2"
+                                        onClick={() => toggleReadMore(item._id)}
                                     >
-                                        Read More
+                                        {expandedMessages[item._id] ? "Read Less" : "Read More"}
                                     </button>
                                 )}
                             </td>
 
-                            {/* Action Buttons (Edit + Delete) */}
                             <td className="px-6 py-4 text-center">
                                 <button
-                                    className="text-blue-600 hover:underline mr-4"
-                                >
-                                    Edit
-                                </button>
-                                <button
                                     className="text-red-600 hover:underline"
+                                    onClick={() => handleDelete(item._id)}
                                 >
                                     Remove
                                 </button>

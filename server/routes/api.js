@@ -41,6 +41,6 @@ router.delete("/deleteTeam/:id", TeamController.deleteTeamController)
 // Feedback routes
 router.post("/createFeedback", FeedBackController.CreateFeedbackController)
 router.get("/showFeedback", FeedBackController.ShowFeedbackController)
-router.delete("/deleteFeedback", FeedBackController.DeleteFeedbackController)
+router.delete("/deleteFeedback/:id", FeedBackController.DeleteFeedbackController)
 
 export default router

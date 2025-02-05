@@ -291,7 +291,7 @@ class ApiCalls {
         }
     }
 
-    async  deleteMember (id) {
+    async  deleteFeedback (id) {
         let IsConfirm = await DeleteAlert()
         if (IsConfirm){
             let result = await axios.delete(`${baseURL}/deleteFeedback/`+ id)
@@ -316,4 +316,4 @@ class ApiCalls {
 
 }
 
-export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog, updateBlog , deleteBlog, createService, getAllServices, updateService, deleteService, createTeam, getAllMembers, updateMember, deleteMember, createFeedback, getAllFeedbacks} = new ApiCalls( )
+export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog, updateBlog , deleteBlog, createService, getAllServices, updateService, deleteService, createTeam, getAllMembers, updateMember, deleteMember, createFeedback, getAllFeedbacks, deleteFeedback} = new ApiCalls( )
