@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { updateBlog as updateBlogAPI } from "../apiCalls/apiCalls.js";
 import TeamComponent from "./TeamComponent.jsx";
 import ServiceComponent from "./ServiceComponent.jsx";
+import ShowAllFeedbacks from "./ShowAllFeedbacks.jsx";
 
 const DashboardComponent = () => {
 
@@ -137,6 +138,7 @@ const DashboardComponent = () => {
                         <Tab>All Blogs</Tab>
                         <Tab>Manage Team Member</Tab>
                         <Tab>Manage Service Item</Tab>
+                        <Tab>Feedbacks</Tab>
                     </TabList>
 
                     {/* Add Blog Form */}
@@ -367,6 +369,9 @@ const DashboardComponent = () => {
 
                     <TabPanel>
                         <ServiceComponent />
+                    </TabPanel>
+                    <TabPanel>
+                        <ShowAllFeedbacks />
                     </TabPanel>
 
                 </Tabs>

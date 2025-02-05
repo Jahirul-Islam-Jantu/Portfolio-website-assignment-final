@@ -1,5 +1,6 @@
 import axios from "axios";
 import {DeleteAlert, ErrorMessage, SuccessMessage} from "../helper/helper.js";
+import error from "eslint-plugin-react/lib/util/error.js";
 
 const baseURL = "http://localhost:3000/api"
 
@@ -269,8 +270,50 @@ class ApiCalls {
     }
 
 
+    // FeedBack api calls
+    async  createFeedback (reqBody) {
+        try {
+            let result = await axios.post(`${baseURL}/createFeedback`, reqBody);
+            return result;
+        } catch (error) {
+            console.error("API Call Error:", error);
+            throw error;
+        }
+
+    }
+    async  getAllFeedbacks() {
+        try {
+            let result = await axios.get(`${baseURL}/showFeedback`);
+            return result.data.message
+        } catch (error) {
+            ErrorMessage("Failed to fetch feedbacks");
+            return [];
+        }
+    }
+
+    async  deleteMember (id) {
+        let IsConfirm = await DeleteAlert()
+        if (IsConfirm){
+            let result = await axios.delete(`${baseURL}/deleteFeedback/`+ id)
+            console.log(result)
+            if (result.data.status === "Success"){
+                return result
+            }
+            else{
+                ErrorMessage(result.data.message)
+                return false
+            }
+
+        }
+
+
+    }
+
+
+
+
 
 
 }
 
-export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog, updateBlog , deleteBlog, createService, getAllServices, updateService, deleteService, createTeam, getAllMembers, updateMember, deleteMember} = new ApiCalls( )
+export const {registerUser, universalApi, loginUser, logOutUser, createBlog, uploadFiles, getAllBlog, updateBlog , deleteBlog, createService, getAllServices, updateService, deleteService, createTeam, getAllMembers, updateMember, deleteMember, createFeedback, getAllFeedbacks} = new ApiCalls( )
