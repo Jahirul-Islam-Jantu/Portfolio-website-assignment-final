@@ -37,7 +37,7 @@ const GetAllBlogs = ({ limit }) => {  // Accept limit as prop
                             <p>{blog?.blogDes}</p>
                             <p>{blog?.blogContent.slice(0, 50)}...</p>
                             <button
-                                className="btn btn-primary mt-2"
+                                className="bg-purple-700 text-white rounded-xl px-4 py-2 md:text-nowrap md:px-6 md:py-2 md:text-sm md: lg:px-10"
                                 onClick={() => setSelectedBlog(blog)}
                             >
                                 Read More

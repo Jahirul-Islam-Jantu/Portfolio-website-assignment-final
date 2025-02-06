@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
-export const MONGODB_CONNECTION = process.env.MONGODB_CONNECTION;
+export const MONGODB_CONNECTION = process.env.MONGODB_CONNECTION ;
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const JWT_EXPIRATION_DURATION = 60 * 60 * 24 * 7 * 1000;
 

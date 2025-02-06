@@ -1,5 +1,4 @@
 import MasterLayOut from "../components/MasterLayOut.jsx";
-import Slider from "../components/Slider.jsx";
 import GetAllBlogs from "../components/GetAllBlogs.jsx";
 import Hero from "../components/Hero.jsx";
 
