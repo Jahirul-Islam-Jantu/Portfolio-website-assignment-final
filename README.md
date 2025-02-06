@@ -1,4 +1,4 @@
     - Front-End Live Link: 
     - Back-End Server Link: 
-    - Dashboard Route: 
-    - Login Credential: 
+    - Dashboard Route: /dashboard
+    - Login Credential: email:test@gmail.com pass: 1234
