@@ -32,7 +32,7 @@ app.use(limiter)
 // web cache
 app.set('etag', WEB_CACHE)
 // MongoDB connection
-mongoose.connect( "mongodb://localhost:27017/live-test" || MONGODB_CONNECTION, {autoIndex: true}).then(()=>{
+mongoose.connect(  MONGODB_CONNECTION, {autoIndex: true}).then(()=>{
     console.log("connected to MongoDB")
 }).catch(err=>{
     console.log(err)
@@ -42,11 +42,11 @@ app.use("/api", router)
 
 // file Upload
 app.use('/file-upload', express.static('uploads'));
+export default app
 
 // run app
 // app.listen(PORT || 3030, ()=>{
 //     console.log(`app running on port ${PORT}`)
 // })
 
-export default app
 
