@@ -18,6 +18,7 @@ import {
 
 const app = express();
 
+// Middleware
 app.use(cors(corsOptions));
 app.use(express.json({ limit: MAX_JSON_SIZE }));
 app.use(express.urlencoded({ extended: URL_ENCODING }));
@@ -33,13 +34,12 @@ app.use(limiter);
 app.set('etag', WEB_CACHE);
 
 // MongoDB connection
-mongoose.connect(MONGODB_CONNECTION, { autoIndex: true }).then(() => {
-    console.log("Connected to MongoDB");
-}).catch(err => {
-    console.error("MongoDB connection error:", err);
-});
+console.log("Connecting to MongoDB...");
+mongoose.connect(MONGODB_CONNECTION, { autoIndex: true })
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("MongoDB connection error:", err));
 
-// Set API
+// Routes
 app.use("/api", router);
 
 // File Upload
@@ -47,7 +47,7 @@ app.use('/file-upload', express.static('uploads'));
 
 // Global error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error("Unhandled error:", err);
     res.status(500).json({ status: "failed", error: "Internal Server Error" });
 });
 
