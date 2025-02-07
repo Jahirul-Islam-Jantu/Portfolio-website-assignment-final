@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser"
 import router from "./routes/api.js";
 import {
     MONGODB_CONNECTION,
-    PORT,
     MAX_JSON_SIZE,
     URL_ENCODING,
     WEB_CACHE,
