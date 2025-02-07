@@ -44,7 +44,9 @@ app.use("/api", router)
 app.use('/file-upload', express.static('uploads'));
 
 // run app
-app.listen(PORT || 3030, ()=>{
-    console.log(`app running on port ${PORT}`)
-})
+// app.listen(PORT || 3030, ()=>{
+//     console.log(`app running on port ${PORT}`)
+// })
+
+export default app
 
