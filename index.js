@@ -35,7 +35,7 @@ app.set('etag', WEB_CACHE);
 
 // MongoDB connection
 console.log("Connecting to MongoDB...");
-mongoose.connect(MONGODB_CONNECTION, { autoIndex: true })
+mongoose.connect("mongodb+srv://unchangedjahir:742682@mernstack.tose2.mongodb.net/Full-Stack", { autoIndex: true })
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("MongoDB connection error:", err));
 
