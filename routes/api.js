@@ -4,7 +4,7 @@ import * as BlogController from "../src/controllers/BlogController.js"
 import * as FileUploads from "../src/controllers/FileUploadController.js"
 import * as ServicesController from "../src/controllers/ServicesController.js"
 import * as TeamController from "../src/controllers/TeamController.js"
-import * as FeedBackController from "../src/controllers/FeedBackController.js"
+import * as FeedBackControllers from "../src/controllers/FeedBackController.js"
 import upload from "../src/middleware/FileUploads.js";
 const router = express.Router()
 
@@ -39,9 +39,9 @@ router.post("/updateTeam/:id", TeamController.UpdateTeamController)
 router.delete("/deleteTeam/:id", TeamController.deleteTeamController)
 
 // Feedback routes
-router.post("/createFeedback", FeedBackController.CreateFeedbackController)
-router.get("/showFeedback", FeedBackController.ShowFeedbackController)
-router.delete("/deleteFeedback/:id", FeedBackController.DeleteFeedbackController)
+router.post("/createFeedback", FeedBackControllers.CreateFeedbackController)
+router.get("/showFeedback", FeedBackControllers.ShowFeedbackController)
+router.delete("/deleteFeedback/:id", FeedBackControllers.DeleteFeedbackController)
 
 
 
