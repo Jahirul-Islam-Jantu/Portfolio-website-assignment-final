@@ -45,11 +45,11 @@ app.use("/api", router);
 // File Upload
 app.use('/file-upload', express.static('uploads'));
 
-// Global error handler
-app.use((err, req, res, next) => {
-    console.error("Unhandled error:", err);
-    res.status(500).json({ status: "failed", error: "Internal Server Error" });
-});
+// // Global error handler
+// app.use((err, req, res, next) => {
+//     console.error("Unhandled error:", err);
+//     res.status(500).json({ status: "failed", error: "Internal Server Error" });
+// });
 
 // Start server
 const PORT = process.env.PORT || 3000;
